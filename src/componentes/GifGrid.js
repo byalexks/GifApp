@@ -25,11 +25,14 @@ const gifs = data.map (img =>{
 })
     setImagenes(gifs);
 }
-
+  
 
     return (
         <>
-         <h1>{cater}</h1> 
+        <div className="d-block" style={{width: 100 + "vw"}}>
+            <h1 >{cater}</h1> 
+            <hr />
+        </div>
                 {
                    imagenes.map(img => (
                      <GifGridItem
