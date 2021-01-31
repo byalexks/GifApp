@@ -1,40 +1,22 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
+import { useFetchGifs } from './hooks/useFetchGifs'
 import { GifGridItem } from './GifGridItem';
-
 
 export const GifGrid = ({cater}) => {
 
-    const [imagenes, setImagenes] = useState([])
+    const {data:images, loading} = useFetchGifs(cater)
 
-useEffect(() => {
-    getGifs();
-}, [])
-
-const getGifs = async()=>{
-    const key = "ZGlHbxjfafMqbuv1SsYZHgVy7eicsjRC";
-    const url = `https://api.giphy.com/v1/gifs/search?q=${encodeURI(cater)}&limit=10&api_key=${key}`;
-    const respuesta = await fetch(url);
-    const {data} = await respuesta.json();
-
-const gifs = data.map (img =>{
-    return {
-        id: img.id,
-        title: img.title,
-        url: img.images?.downsized_medium.url
-    }
-})
-    setImagenes(gifs);
-}
-  
 
     return (
         <>
         <div className="d-block" style={{width: 100 + "vw"}}>
             <h1 >{cater}</h1> 
             <hr />
+
+            {loading && <p className="animate__animated  animate__flash">loading</p> }
         </div>
                 {
-                   imagenes.map(img => (
+                   images.map(img => (
                      <GifGridItem
                      key={img.id}
                      {...img}
